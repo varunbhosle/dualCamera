@@ -73,6 +73,7 @@ class MainActivity : AppCompatActivity() {
     private fun takePhoto() {
         // Capture photo from the back camera
         imageCaptureBack?.let { capturePhoto(it) }
+        progressBar?.visibility = View.VISIBLE
         Handler(Looper.getMainLooper()).postDelayed({
             // Capture photo from the front camera
             startCamera()
@@ -83,6 +84,7 @@ class MainActivity : AppCompatActivity() {
             // Capture photo from the front camera
             imageCaptureFront?.let { capturePhoto(it) }
         }, 3000) // Adjust delay time as needed
+        progressBar?.visibility = View.VISIBLE
 
         Handler(Looper.getMainLooper()).postDelayed({
             // Capture photo from the front camera
