@@ -77,13 +77,13 @@ class MainActivity : AppCompatActivity() {
         Handler(Looper.getMainLooper()).postDelayed({
             // Capture photo from the front camera
             startCamera()
-        }, 3000) // Adjust delay time as needed
+        }, 2000) // Adjust delay time as needed
 
         // Capture photo from the front camera
         Handler(Looper.getMainLooper()).postDelayed({
             // Capture photo from the front camera
             imageCaptureFront?.let { capturePhoto(it) }
-        }, 5000) // Adjust
+        }, 4000) // Adjust
 
     }
 
