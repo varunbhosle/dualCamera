@@ -10,6 +10,7 @@ import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.core.CameraSelector
@@ -36,13 +37,14 @@ class MainActivity : AppCompatActivity() {
     private var imageCaptureBack: ImageCapture? = null
     private var imageCaptureFront: ImageCapture? = null
     private var isBackCameraSelected = true
+    private var progressBar : ProgressBar? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
-
+        progressBar = findViewById<ProgressBar>(R.id.progress) as ProgressBar
         // hide the action bar
         supportActionBar?.hide()
 
@@ -63,17 +65,14 @@ class MainActivity : AppCompatActivity() {
         findViewById<Button>(R.id.camera_capture_button).setOnClickListener {
             takePhoto()
             isBackCameraSelected = !isBackCameraSelected
-
         }
         outputDirectory = getOutputDirectory()
         cameraExecutor = Executors.newSingleThreadExecutor()
     }
 
     private fun takePhoto() {
-
         // Capture photo from the back camera
         imageCaptureBack?.let { capturePhoto(it) }
-
         Handler(Looper.getMainLooper()).postDelayed({
             // Capture photo from the front camera
             startCamera()
@@ -83,9 +82,14 @@ class MainActivity : AppCompatActivity() {
         Handler(Looper.getMainLooper()).postDelayed({
             // Capture photo from the front camera
             imageCaptureFront?.let { capturePhoto(it) }
-        }, 4000) // Adjust
+        }, 3000) // Adjust delay time as needed
 
+        Handler(Looper.getMainLooper()).postDelayed({
+            // Capture photo from the front camera
+            recreate()
+        }, 4000) // Adjust delay time as needed
     }
+
 
     private fun startCamera() {
         val cameraProviderFuture = ProcessCameraProvider.getInstance(this)
